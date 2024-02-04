@@ -10,7 +10,7 @@ import java.util.UUID;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column
@@ -26,6 +26,7 @@ public class Product {
     private String photo_url;
 
     public Product(String name, double price, String bio, String photo_url) {
+        this.id = null;
         this.name = name;
         this.price = price;
         this.bio = bio;
