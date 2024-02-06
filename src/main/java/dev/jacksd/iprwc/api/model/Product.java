@@ -1,37 +1,40 @@
 package dev.jacksd.iprwc.api.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
 import java.util.UUID;
 
 @Entity
-@Table(name = "products")
+@Table(name = "_products")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    UUID id;
 
     @Column
-    private String name;
+    String name;
 
     @Column
-    private double price;
+    double price;
 
     @Column
-    private String bio;
+    String bio;
 
     @Column
-    private String photo_url;
+    String photoUrl;
 
-    public Product(String name, double price, String bio, String photo_url) {
-        this.id = null;
+    public Product(String name, double price, String bio, String photoUrl) {
         this.name = name;
         this.price = price;
         this.bio = bio;
-        this.photo_url = photo_url;
+        this.photoUrl = photoUrl;
     }
-
-    public Product() {}
 }
