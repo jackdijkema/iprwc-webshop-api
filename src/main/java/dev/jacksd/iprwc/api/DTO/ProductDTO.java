@@ -1,14 +1,14 @@
 package dev.jacksd.iprwc.api.DTO;
 
-import dev.jacksd.iprwc.api.model.Order;
 import lombok.Data;
 
-import java.util.List;
+import java.util.UUID;
 
 @Data
-public class UserDTO {
+public class ProductDTO {
+    UUID id;
     String name;
-    String email;
-    String password;
-    private List<Order> orders;
+    Double price;
+    String bio;
+    String photoUrl;
 }

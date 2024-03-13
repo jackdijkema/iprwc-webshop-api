@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class OrderController {
 
-    OrderService orderService;
+    private final OrderService orderService;
 
     @Autowired
     public OrderController(OrderService orderService) {
