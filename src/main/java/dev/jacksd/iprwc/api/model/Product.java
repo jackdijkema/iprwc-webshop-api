@@ -30,11 +30,15 @@ public class Product {
 
     @Column
     String photoUrl;
+    
+    @Column
+    String artist;
 
-    public Product(String name, double price, String bio, String photoUrl) {
+    public Product(String name, double price, String bio, String photoUrl, String artist) {
         this.name = name;
         this.price = price;
         this.bio = bio;
+        this.artist = artist;
         this.photoUrl = photoUrl;
     }
 }

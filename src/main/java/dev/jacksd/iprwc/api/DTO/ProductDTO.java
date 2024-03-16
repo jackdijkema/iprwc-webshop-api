@@ -8,6 +8,7 @@ import java.util.UUID;
 public class ProductDTO {
     UUID id;
     String name;
+    String artist;
     Double price;
     String bio;
     String photoUrl;

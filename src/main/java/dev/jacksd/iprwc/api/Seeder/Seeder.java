@@ -33,8 +33,6 @@ public class Seeder {
             admin.setPassword("admin");
 
 
-
-
             userRepository.save(admin);
 
 
