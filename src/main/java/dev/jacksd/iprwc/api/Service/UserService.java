@@ -3,8 +3,6 @@ package dev.jacksd.iprwc.api.Service;
 import dev.jacksd.iprwc.api.model.User;
 import dev.jacksd.iprwc.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +23,6 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-
+    public Optional<User> getUserByEmail(String email) {return userRepository.findByEmail(email);}
 
 }

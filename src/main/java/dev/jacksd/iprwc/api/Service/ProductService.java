@@ -30,6 +30,8 @@ public class ProductService {
     public void saveAll(List<Product> products) {
         productRepository.saveAll(products);
     }
+
+    public void deleteById(UUID id) {productRepository.deleteById(id);}
 }
 
 

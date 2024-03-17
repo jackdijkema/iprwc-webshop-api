@@ -24,16 +24,16 @@ public class Seeder {
 
             String adminPassword;
 
-            BCryptPasswordEncoder bCryptPasswordEncoder;
+//            BCryptPasswordEncoder bCryptPasswordEncoder;
 
-            User admin = new User();
+//            User admin = new User();
+//
+//            admin.setRole(Role.ADMIN);
+//            admin.setEmail("");
+//            admin.setPassword("");
 
-            admin.setRole(Role.ADMIN);
-            admin.setEmail("jackdijkema@hotmail.com");
-            admin.setPassword("admin");
 
-
-            userRepository.save(admin);
+//            userRepository.save(admin);
 
 
         };

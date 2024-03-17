@@ -1,15 +1,12 @@
 package dev.jacksd.iprwc.api.DTO;
 
+import dev.jacksd.iprwc.api.model.OrderItem;
 import lombok.Data;
 
-import java.util.Date;
+import java.util.Collection;
 import java.util.Set;
-import java.util.UUID;
 
 @Data
 public class OrderDTO {
-    UUID id;
-    Date orderDate;
-    double totalPrice;
-    private Set<ProductDTO> products;
+    Collection<OrderItemDTO> orderItems;
 }

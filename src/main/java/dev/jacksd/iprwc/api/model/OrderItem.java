@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Table(name = "_orders_item")
@@ -31,4 +32,13 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     Product product;
+
+
+    OrderItem(Order order, Product product, Integer quantity) {
+        order.setCreationDate(LocalDate.now());
+        this.quantity = quantity;
+        this.product = product;
+    }
+
+
 }

@@ -34,11 +34,12 @@ public class SecurityConfiguration {
                         .configurationSource(request -> {
                             CorsConfiguration config = new CorsConfiguration();
                             config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+                            //config.setAllowedOrigins(Arrays.asList("https://jacksd.dev"));
                             config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
                             config.setAllowedHeaders(Arrays.asList("*"));
                             config.setExposedHeaders(Arrays.asList("Authorization"));
                             config.setAllowCredentials(true);
-                            config.setMaxAge(3600L);
+                            config.setMaxAge(7200L);
                             return config;
                         }))
                 .authorizeHttpRequests(auth -> auth

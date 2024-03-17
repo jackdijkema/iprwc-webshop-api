@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -18,7 +19,7 @@ public class Order {
     UUID id;
 
     @Column
-    Date orderDate;
+    LocalDate creationDate;
 
     @Column
     double totalAmount;
@@ -31,13 +32,13 @@ public class Order {
     User user;
 
     public Order(User user, Set<OrderItem> orderItems) {
-        this.orderDate = new Date();
+        this.creationDate = LocalDate.now();
         this.user = user;
         this.orderItems = orderItems;
     }
 
     public Order() {
-        this.orderDate = new Date();
+        this.creationDate = LocalDate.now();
     }
 
 }
