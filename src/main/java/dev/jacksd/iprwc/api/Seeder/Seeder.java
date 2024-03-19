@@ -1,41 +1,36 @@
 package dev.jacksd.iprwc.api.Seeder;
 
-import dev.jacksd.iprwc.api.Service.OrderService;
-import dev.jacksd.iprwc.api.Service.ProductService;
+import dev.jacksd.iprwc.api.Service.UserService;
 import dev.jacksd.iprwc.api.enums.Role;
-import dev.jacksd.iprwc.api.model.*;
-import dev.jacksd.iprwc.api.repository.*;
+import dev.jacksd.iprwc.api.model.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Configuration
 public class Seeder {
 
+    @Value("${super-admin.email}")
+    String adminEmail;
+
+    @Value("${super-admin.password}")
+    String adminPassword;
+
+    User admin = new User();
+
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository userRepository, ProductRepository productRepository, OrderRepository orderRepository, OrderService orderService) {
+    CommandLineRunner commandLineRunner(UserService userService, PasswordEncoder passwordEncoder) {
+
         return args -> {
 
-            String adminPassword;
+            admin.setEmail(adminEmail);
+            admin.setPassword(passwordEncoder.encode(adminPassword));
+            admin.setRole(Role.ADMIN);
+            admin.setFirstname("Admin");
 
-//            BCryptPasswordEncoder bCryptPasswordEncoder;
-
-//            User admin = new User();
-//
-//            admin.setRole(Role.ADMIN);
-//            admin.setEmail("");
-//            admin.setPassword("");
-
-
-//            userRepository.save(admin);
-
-
+            userService.save(admin);
         };
     }
 }
