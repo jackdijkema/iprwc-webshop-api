@@ -5,6 +5,7 @@ import dev.jacksd.iprwc.api.DTO.AuthenticationRequest;
 import dev.jacksd.iprwc.api.DTO.AuthenticationResponse;
 import dev.jacksd.iprwc.api.DTO.RegisterRequest;
 import dev.jacksd.iprwc.api.Service.AuthenticationService;
+import dev.jacksd.iprwc.api.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+
+        if(userService.isUserTaken(request.getEmail())) {
+            return ResponseEntity.badRequest().build();
+        }
+
         return ResponseEntity.ok(authenticationService.register(request));
     }
 

@@ -6,6 +6,6 @@ import java.util.UUID;
 
 @Data
 public class OrderItemDTO {
-    private int quantity;
     private UUID product;
+    private int quantity;
 }

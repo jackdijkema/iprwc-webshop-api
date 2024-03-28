@@ -1,12 +1,11 @@
 package dev.jacksd.iprwc.api.DTO;
 
-import dev.jacksd.iprwc.api.model.OrderItem;
 import lombok.Data;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class OrderDTO {
-    Collection<OrderItemDTO> orderItems;
+    List<OrderItemDTO> orderItems;
 }

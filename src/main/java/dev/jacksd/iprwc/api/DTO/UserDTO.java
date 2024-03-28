@@ -13,6 +13,4 @@ public class UserDTO {
     String lastname;
     String email;
     Role role;
-
-    Set<Order> orders;
 }

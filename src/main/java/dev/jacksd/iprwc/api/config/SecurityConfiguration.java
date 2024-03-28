@@ -34,7 +34,7 @@ public class SecurityConfiguration {
                         .configurationSource(request -> {
                             CorsConfiguration config = new CorsConfiguration();
                             config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-                            //config.setAllowedOrigins(Arrays.asList("https://jacksd.dev"));
+//                          config.setAllowedOrigins(Arrays.asList("https://jacksd.dev", "https://webshop.jacksd.dev"));
                             config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
                             config.setAllowedHeaders(Arrays.asList("*"));
                             config.setExposedHeaders(Arrays.asList("Authorization"));
@@ -43,7 +43,8 @@ public class SecurityConfiguration {
                             return config;
                         }))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**","/api/v1/products", "/api/v1/products/{id}" ).permitAll()
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/products", "/api/v1/products/{id}", "/api/v1/orders").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

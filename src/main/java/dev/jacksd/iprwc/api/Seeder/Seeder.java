@@ -30,7 +30,7 @@ public class Seeder {
             admin.setRole(Role.ADMIN);
             admin.setFirstname("Admin");
 
-            userService.save(admin);
+//            userService.save(admin);
         };
     }
 }

@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ import java.util.UUID;
 
 @RequestMapping("api/v1/users")
 @RestController
-//@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
 
     private final UserService userService;
@@ -42,7 +43,6 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-
     @GetMapping(path = "/customer")
     public ResponseEntity<UserDTO> getCustomerData() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -64,7 +64,6 @@ public class UserController {
 
         return userDTO.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
 
     private UserDTO convertToDto(Optional<User> user) {
         return modelMapper.map(user, UserDTO.class);

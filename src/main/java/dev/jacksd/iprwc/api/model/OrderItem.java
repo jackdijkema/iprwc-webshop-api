@@ -1,5 +1,6 @@
 package dev.jacksd.iprwc.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -39,6 +40,5 @@ public class OrderItem {
         this.quantity = quantity;
         this.product = product;
     }
-
 
 }
