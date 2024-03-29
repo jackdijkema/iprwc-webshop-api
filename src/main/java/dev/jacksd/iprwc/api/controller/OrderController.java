@@ -2,6 +2,7 @@ package dev.jacksd.iprwc.api.controller;
 
 import dev.jacksd.iprwc.api.DTO.OrderDTO;
 import dev.jacksd.iprwc.api.DTO.OrderItemDTO;
+import dev.jacksd.iprwc.api.DTO.OrderResponse;
 import dev.jacksd.iprwc.api.Service.OrderService;
 import dev.jacksd.iprwc.api.Service.ProductService;
 import dev.jacksd.iprwc.api.Service.UserService;
@@ -54,7 +55,7 @@ public class OrderController {
 
         for (OrderItemDTO orderItemDTO : orderDTO.getOrderItems()) {
 
-            Optional<Product> productOptional = productService.getProductById(orderItemDTO.getProduct());
+            Optional<Product> productOptional = productService.getProductById(orderItemDTO.getProduct().getId());
 
             if (productOptional.isPresent()) {
                 Product product = productOptional.get();
@@ -80,7 +81,7 @@ public class OrderController {
     }
 
     @GetMapping
-    private ResponseEntity<List<OrderDTO>> getOrderByUser() {
+    private ResponseEntity<List<OrderResponse>> getOrdersByUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String authenticatedUserEmail = authentication.getName();
 
@@ -96,25 +97,69 @@ public class OrderController {
 
         List<Order> orders = orderService.getAllOrdersByUser(user.get());
 
-        List<OrderDTO> orderDTOS = new ArrayList<>();
+        List<OrderResponse> orderDTOS = new ArrayList<>();
+
+
         for (Order order : orders) {
             List<OrderItemDTO> orderItemDtos = order
                     .getOrderItems()
                     .stream()
                     .map(orderItem -> {
                         OrderItemDTO orderItemDTO = new OrderItemDTO();
-                        orderItemDTO.setProduct(orderItem.getProduct().getId());
+                        orderItemDTO.setProduct(orderItem.getProduct());
                         orderItemDTO.setQuantity(orderItem.getQuantity());
                         return orderItemDTO;
                     }).toList();
 
 
-            OrderDTO dto = new OrderDTO();
-            dto.setOrderItems(orderItemDtos);
+            OrderResponse dto = new OrderResponse();
 
+            dto.setId(order.getId());
+            dto.setCreationDate(order.getCreationDate());
+            dto.setOrderItems(orderItemDtos);
             orderDTOS.add(dto);
         }
 
         return ResponseEntity.ok(orderDTOS);
+    }
+
+    @GetMapping(path = "/{id}")
+    private ResponseEntity<OrderResponse> getOrderById(@PathVariable UUID id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String authenticatedUserEmail = authentication.getName();
+
+        Optional<User> user = userService.getUserByEmail(authenticatedUserEmail);
+
+        if (user.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (!authenticatedUserEmail.equals(user.get().getEmail())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        List<Order> userOrders = orderService.getAllOrdersByUser(user.get());
+        OrderResponse orderResponse = new OrderResponse();
+
+        if (!userOrders.isEmpty()) {
+            for (Order order : userOrders) {
+                if (order.getId().equals(id)) {
+                    List<OrderItemDTO> orderItemDtos = order.getOrderItems().stream()
+                            .map(orderItem -> {
+                                OrderItemDTO orderItemDTO = new OrderItemDTO();
+                                orderItemDTO.setProduct(orderItem.getProduct());
+                                orderItemDTO.setQuantity(orderItem.getQuantity());
+                                return orderItemDTO;
+                            }).toList();
+
+                    orderResponse.setOrderItems(orderItemDtos);
+                    orderResponse.setId(order.getId());
+                    orderResponse.setTotalAmount(order.getTotalAmount());
+                    orderResponse.setCreationDate(order.getCreationDate());
+                    return ResponseEntity.ok(orderResponse);
+                }
+            }
+        }
+        return ResponseEntity.badRequest().build();
     }
 }

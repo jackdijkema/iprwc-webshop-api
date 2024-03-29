@@ -6,10 +6,12 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class OrderResponse {
-    List<Order> orderItems;
+    UUID id;
+    List<OrderItemDTO> orderItems;
     LocalDate creationDate;
     double totalAmount;
 }

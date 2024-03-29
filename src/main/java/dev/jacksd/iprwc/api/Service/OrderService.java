@@ -1,12 +1,11 @@
 package dev.jacksd.iprwc.api.Service;
 
 import dev.jacksd.iprwc.api.model.Order;
-import dev.jacksd.iprwc.api.model.OrderItem;
 import dev.jacksd.iprwc.api.model.User;
 import dev.jacksd.iprwc.api.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,11 +24,6 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public double getTotalOrderPrice(Order order) {
-        double totalPrice = 0.0;
-        for (OrderItem orderItem : order.getOrderItems()) {
-            totalPrice += orderItem.getProduct().getPrice() * orderItem.getQuantity();
-        }
-        return totalPrice;
+    public Optional<Order> getOrderById(UUID id) {return  orderRepository.findById(id);
     }
 }

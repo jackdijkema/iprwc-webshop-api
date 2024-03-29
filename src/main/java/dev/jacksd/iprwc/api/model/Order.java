@@ -22,6 +22,7 @@ public class Order {
     LocalDate creationDate;
 
     @Column
+    @Transient
     double totalAmount;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -35,10 +36,19 @@ public class Order {
         this.creationDate = LocalDate.now();
         this.user = user;
         this.orderItems = orderItems;
+        calculateTotalAmount();
     }
 
     public Order() {
         this.creationDate = LocalDate.now();
+        calculateTotalAmount();
     }
 
+    public void calculateTotalAmount() {
+        double total = 0.0;
+        for (OrderItem item : orderItems) {
+            total += item.getQuantity() * item.getProduct().getPrice();
+        }
+        this.totalAmount = total;
+    }
 }
